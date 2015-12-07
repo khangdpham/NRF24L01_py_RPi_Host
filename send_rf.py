@@ -16,8 +16,6 @@ try:
 				'device4' :[0xe0,0xe0,0xe0,0xe0,0xe4] ,
 				'device5' :[0xe0,0xe0,0xe0,0xe0,0xe5] ,
 			}
-	#pipes = [[ 0xf0, 0xf0 ,0xf0,0xf0,0xe1 ],
-	#	[ 0xf0, 0xf0 ,0xf0,0xf0,0xd2 ] ]
 
 	radio = NRF24(GPIO,spidev.SpiDev())
 	radio.begin(0,25)
@@ -34,8 +32,8 @@ try:
 	buf =  [int(sys.argv[2])]
 	dev =  str(sys.argv[1])
 	
-	radio.openWritingPipe(Devices['host'])
-	radio.openReadingPipe(1,Devices[dev])
+	radio.openWritingPipe(Devices[dev])
+	radio.openReadingPipe(1,Devices['host'])
 	radio.printDetails()
 
 	radio.stopListening()
@@ -44,8 +42,9 @@ try:
 	radio.startListening()
 except Exception as ex:
 	print ex
+	print "Usage: sudo python send_rf.py <device#> <int>"
 finally:
-	print "Prepare for cleanup"
+	# Clean up GPIO if used
 	GPIO.cleanup()
 	
 	
