@@ -50,12 +50,12 @@ try:
 		if radio.available():
 			radio.read(recv_buffer)
 			if recv_buffer[:5][::-1] == Devices[dev]:
-				status = "Success"
+				STATUS = "Success"
 			
 			break
-		status = "Failed"
+		STATUS = "Failed"
 		time.sleep(1)
-	print status
+	print "Status :" ,STATUS
 except Exception as ex:
 	print ex
 	print STATUS
