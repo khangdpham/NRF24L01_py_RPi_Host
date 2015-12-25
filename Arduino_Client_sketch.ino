@@ -9,14 +9,14 @@ int relay = 8;
  
 // Set up nRF24L01 radio on SPI bus plus pins 9 & 10 
  
-RF24 radio(9,10);
+RF24 radio(5,6);
  
 //
 // Topology
 //
- 
+int MYID = 5;
 // Radio pipe addresses for the 2 nodes to communicate.
-const uint64_t pipes[2] = { 0xE0E0E0E0E1LL, 0xF0F0F0F0E1LL };
+const uint64_t pipes[2] = { 0xE0E0E0E0E5LL, 0xF0F0F0F0E1LL };
  
  
 char * convertNumberIntoArray(unsigned short number, unsigned short length) {
@@ -79,13 +79,12 @@ int getState(unsigned short pin){
 }
  
 void doAction(unsigned short id, unsigned short action){
- 
-    
-        digitalWrite(8, HIGH);
+       if(id == MYID){     
+        digitalWrite(action, HIGH);
 
         delay(100);
-        digitalWrite(8, LOW);
-  
+        digitalWrite(action, LOW);
+       }
  
  
 }
@@ -123,8 +122,7 @@ void loop(void)
       // Dump the payloads until we've gotten everything
       unsigned short message;
       bool done;
-//      char * new;
-      unsigned short rawMessage; 
+      int rawMessage; 
       done = false;
       while ( radio.available() )
       {
