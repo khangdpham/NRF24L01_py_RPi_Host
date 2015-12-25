@@ -7,7 +7,7 @@ import spidev
 
 # Usage  python send_rf.py <device#> <int>
 try:
-	TIMEOUT = 5 
+	TIMEOUT = 10
 	STATUS  = "Unknown"
 	GPIO.setmode(GPIO.BCM)
 	Devices = {
@@ -55,7 +55,6 @@ try:
 			break
 		STATUS = "Failed"
 		time.sleep(1)
-		print ".",
 		count = count+1
 	print "Status :" ,STATUS
 except Exception as ex:
